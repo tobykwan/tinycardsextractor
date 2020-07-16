@@ -14,7 +14,7 @@ for ( $i = 0; $i -lt $rawDecks.Count; $i++ )  {
     Write-Host ("Processing deck {0} of {1} titled {2} ... " -f $i, $rawDecks.Count, $deckName)
     $outputFilename = "{0}.csv" -f $rawDeck.name
     # Split jumbled card texts into lines
-    $cardLines = $rawDeck[0].cards -split '\r\n'
+    $cardLines = $rawDeck.cards -split '\r\n'
     # Initialize cards for this deck
     $cards = @()
 
