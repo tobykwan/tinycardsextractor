@@ -17,4 +17,6 @@ You **SHOULD NOT** just download and run any script you find on the Internet, wi
 .\Get-Deck.ps1
 
 ## Remarks
+* Only supports 1 single Front and Back
+* Not much testing has been done to cover different scenarios (e.g. my cards have no non-latin characters, such as Chinese, Japanese); comments welcome
 * This sure also works on Mac, as you can install PowerShell6/7 on macOS
