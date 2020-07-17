@@ -19,5 +19,5 @@ You **SHOULD NOT** just download and run any script you find on the Internet, wi
 ## Remarks/Limitations
 * Supports upto to 3 Fronts and Backs
 * Images are saved as URLs
-* Not much testing has been done to cover different scenarios (e.g. my cards have no non-latin characters, such as Chinese, Japanese); comments welcome
+* Not much testing has been done to cover different scenarios (e.g. my cards have no double-byte characters, such as Chinese, Japanese)
 * This sure also works on Mac, as you can install PowerShell6/7 on macOS
