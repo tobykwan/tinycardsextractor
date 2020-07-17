@@ -21,7 +21,7 @@ function Get-DeckText  {
     }
 }
 
-$rawDecks = Import-Csv $RawDeckFilename
+$rawDecks = Import-Csv $RawDeckFilename -Encoding UTF8
 Write-Host ("{0} decks found ... " -f $rawDecks.Count)
 for ( $i = 0; $i -lt $rawDecks.Count; $i++ )  {
     $rawDeck = $rawDecks[$i]
@@ -83,7 +83,7 @@ for ( $i = 0; $i -lt $rawDecks.Count; $i++ )  {
         continue
     }
     Write-Host ("Saving {0} cards to file '{1}' ..." -f $cards.Count, $outputFilename)
-    $cards | Export-Csv -Path $outputFilename -NoTypeInformation
+    $cards | Export-Csv -Encoding UTF8 -Path $outputFilename -NoTypeInformation
 }
 Write-Host
 Write-Host ("==========================")
