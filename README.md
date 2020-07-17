@@ -7,6 +7,13 @@ While Duolingo has given [instructions](https://support.duolingo.com/hc/en-us/ar
 ## A little warning to non-IT guys
 You **SHOULD NOT** just download and run any script you find on the Internet, without fully understanding what it does.  That said, you may be here simply because you're using Duolingo/Tinycards, not because you're a seasoned programmer/system administrator (and Duolingo sure doesn't teach PowerShell :-P).  If you're not sure, ask a "tech guy" (with a complementary cup of latte ready) to help you read the script to make sure it's safe to run.  (The same goes for any other scripts you find online, in general.)
 
+## Supported Platform
+It's a simple PowerShell script (PowerShell is another programming language.)
+
+If you have Windows, you're ready to use the script
+
+If you use Mac, you'll need to download and install PowerShell first.  (Again, get an IT guy's help if you have absolutely no idea what this's about.)
+
 ## Instruction
 * Follow Duolingo's [instructions](https://support.duolingo.com/hc/en-us/articles/360043909772) to obtain your personal data, which turns out to be a single 'duolingo.zip'.
 * Unzip the file to find the 'decks.csv' file, save it to your preferred folder, e.g. `c:\temp\duolingo`
