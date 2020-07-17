@@ -6,6 +6,21 @@ param(
     .SYNOPSIS
     TinyCards Deck Extractor
 #>
+function Get-DeckText  {
+    param(
+        [String]
+        $RawText
+    )
+    if ( $rawText -match "\.*\[image\]\((?<imageUrl>.*)\)")  {
+        # Extract the image URL
+        $Matches["imageUrl"]
+    }
+    else  {
+        # Just chop off the leading '* '
+        $rawText.Substring(2,$rawText.Length-2)
+    }
+}
+
 $rawDecks = Import-Csv $RawDeckFilename
 Write-Host ("{0} decks found ... " -f $rawDecks.Count)
 for ( $i = 0; $i -lt $rawDecks.Count; $i++ )  {
@@ -22,15 +37,49 @@ for ( $i = 0; $i -lt $rawDecks.Count; $i++ )  {
     for ($j = 0; $j -lt $cardLines.Count; $j++)  {
         # Save the card when reaching a '### Card' line
         if ( $cardLines[$j] -like '### Card*' )  {
-            $frontText = $cardLines[$j+2]
-            $backText = $cardLines[$j+5]
-            # Remove the leading '* '
-            $cards += [PSCustomObject]@{
-                Front = $frontText.Substring(2,$frontText.Length-2)
-                Back = $backText.Substring(2,$backText.Length-2)
+            $frontTexts = @()
+            $backTexts = @()
+            # Note that $currentLineNumber is 0-based
+            $currentLineNumber = $j+1
+            $currentLine = $cardLines[$currentLineNumber]
+            while ( ($currentLineNumber -lt $cardLines.Count) -and ($currentLine -notlike '### Card*') )  {
+                if ($currentLine -eq "Front")  {
+                    # Get the next line
+                    $rawText = $cardLines[$currentLineNumber+1]
+                    $frontText = Get-DeckText -RawText $rawText
+                    $frontTexts += $frontText
+                }
+                elseif ($currentLine -eq "Back")  {
+                    # Get the next line
+                    $rawText = $cardLines[$currentLineNumber+1]
+                    $backText = Get-DeckText -RawText $rawText
+                    $backTexts += $backText
+                }
+                $currentLineNumber++
+                if ( $currentLineNumber -lt $cardLines.Count )  {
+                    $currentLine = $cardLines[$currentLineNumber]
+                }
+                else  {
+                    # End of card lines reached
+                    $currentLine = $null
+                }
             }
+            $card = [PSCustomObject]@{
+                front1 = $null
+                front2 = $null
+                front3 = $null
+                back1 = $null
+                back2 = $null
+                back3 = $null
+            }
+            for ( $k = 1; $k -le 3; $k++)  {
+                $property = "front$k"
+                $card.$property = $frontTexts[$k-1]
+                $property = "back$k"
+                $card.$property = $backTexts[$k-1]
+            }
+            $cards += $card
         }
-        # All other lines are skipped
         continue
     }
     Write-Host ("Saving {0} cards to file '{1}' ..." -f $cards.Count, $outputFilename)
